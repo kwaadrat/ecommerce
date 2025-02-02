@@ -1,18 +1,31 @@
 # Overview
 
-Lorem ipsum
+Super simple E-Commerce engine.
 
 # Key Features
 
-Lorem ipsum
+Products managment
+Orders managment
+Users registration
 
 # Test Accounts
 
-xyz
-zyx
+Admin:
+login: admin
+password: admin123
+
+User:
+login: user
+password: user123
+
 
 # Technologies
 
-.NET
+ASP.NET
+Entity Framework Core
+C#
+HTML/CSS
 
 # Changelog
+
+2025/01/31 - first working version
