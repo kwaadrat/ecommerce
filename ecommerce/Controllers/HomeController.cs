@@ -13,8 +13,12 @@ namespace ecommerce.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public IActionResult Index([FromQuery] string name)
         {
+            string username = name;
+            if (string.IsNullOrEmpty(username))
+                username = "Stranger";
+            ViewData["User"] = username;
             return View();
         }
 
