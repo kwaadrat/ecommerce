@@ -2,7 +2,7 @@
 using System.Linq;
 using ecommerce.Models;
 
-namespace WebApplication1.Controllers
+namespace ecommerce.Controllers
 {
     public class UserController : Controller
     {
