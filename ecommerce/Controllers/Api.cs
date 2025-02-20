@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Data.Entities;
 
 namespace ecommerce.Controllers
 {

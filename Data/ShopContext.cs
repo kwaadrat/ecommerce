@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Emit;
-using System.Text;
-using System.Threading.Tasks;
-using Data.Entities;
+﻿using Data.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-
-namespace ClassLibrary1
+namespace Data
 {
-    public class EcommerceContext : IdentityDbContext<IdentityUser>
+    public class ShopContext : IdentityDbContext<IdentityUser>
     {
 
         public DbSet<ProductEntity> Products { get; set; }
@@ -20,7 +13,7 @@ namespace ClassLibrary1
 
 
 
-        public EcommerceContext(DbContextOptions<EcommerceContext> options)
+        public ShopContext(DbContextOptions<ShopContext> options)
     : base(options)
         {
         }
