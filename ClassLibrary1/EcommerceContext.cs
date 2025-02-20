@@ -4,10 +4,15 @@ using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
+using Data.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace ClassLibrary1
 {
-    public class ShopContext : IdentityDbContext<IdentityUser>
+    public class EcommerceContext : IdentityDbContext<IdentityUser>
     {
 
         public DbSet<ProductEntity> Products { get; set; }
@@ -15,7 +20,7 @@ namespace ClassLibrary1
 
 
 
-        public ShopContext(DbContextOptions<ShopContext> options)
+        public EcommerceContext(DbContextOptions<EcommerceContext> options)
     : base(options)
         {
         }

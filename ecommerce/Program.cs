@@ -8,13 +8,13 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("ShopContextConnection")
     ?? throw new InvalidOperationException("Connection string 'ShopContextConnection' not found.");
 
-builder.Services.AddDbContext<ShopContext>(options =>
+builder.Services.AddDbContext<EcommerceContext>(options =>
     options.UseSqlite(connectionString));
 
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddRoles<IdentityRole>()
-    .AddEntityFrameworkStores<ShopContext>();
+    .AddEntityFrameworkStores<EcommerceContext>();
 
 
 builder.Services.AddMemoryCache();

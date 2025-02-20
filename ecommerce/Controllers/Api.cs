@@ -7,9 +7,9 @@ namespace ecommerce.Controllers
     [Produces("application/json")]
     public class ProductApiController : ControllerBase
     {
-        private readonly ShopContext _context;
+        private readonly EcommerceContext _context;
 
-        public ProductApiController(ShopContext context)
+        public ProductApiController(EcommerceContext context)
         {
             _context = context;
         }

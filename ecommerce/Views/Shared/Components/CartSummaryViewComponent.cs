@@ -1,4 +1,4 @@
-﻿using Data;
+﻿
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -6,9 +6,9 @@ namespace Web.Views.Shared.Components
 {
     public class CartSummaryViewComponent : ViewComponent
     {
-        private readonly ShopContext _context;
+        private readonly EcommerceContext _context;
 
-        public CartSummaryViewComponent(ShopContext context)
+        public CartSummaryViewComponent(EcommerceContext context)
         {
             _context = context;
         }

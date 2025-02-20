@@ -7,9 +7,9 @@ namespace ecommerce.Controllers
 {
     public class OrderController : Controller
     {
-        private readonly ShopContext _context;
+        private readonly EcommerceContext _context;
 
-        public OrderController(ShopContext context)
+        public OrderController(EcommerceContext context)
         {
             _context = context;
         }

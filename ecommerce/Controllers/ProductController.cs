@@ -6,9 +6,9 @@ namespace ecommerce.Controllers
     [AllowAnonymous]
     public class ProductController : Controller
     {
-        private readonly ShopContext _context;
+        private readonly EcommerceContext _context;
 
-        public ProductController(ShopContext context)
+        public ProductController(EcommerceContext context)
         {
             _context = context;
         }
