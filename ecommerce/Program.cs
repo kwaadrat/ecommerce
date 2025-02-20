@@ -1,6 +1,13 @@
 using System.Text;
 using Microsoft.AspNetCore.Identity;
 using ecommerce.Middleware;
+using Data;
+using Microsoft.EntityFrameworkCore;
+using System.Text;
+
+using Microsoft.AspNetCore.Identity;
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 
