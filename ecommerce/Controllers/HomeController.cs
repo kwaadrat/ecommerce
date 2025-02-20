@@ -6,19 +6,8 @@ namespace ecommerce.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        public IActionResult Index()
         {
-            _logger = logger;
-        }
-
-        public IActionResult Index([FromQuery] string name)
-        {
-            string username = name;
-            if (string.IsNullOrEmpty(username))
-                username = "Stranger";
-            ViewData["User"] = username;
             return View();
         }
 

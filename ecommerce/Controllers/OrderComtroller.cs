@@ -1,96 +1,66 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using ecommerce.Models;
+using System.Security.Claims;
 
 namespace ecommerce.Controllers
 {
     public class OrderController : Controller
     {
-        static List<OrdersViewModel> Orders = new List<OrdersViewModel>();
+        private readonly ShopContext _context;
 
-        [HttpGet]
-        public IActionResult Index(string searchString)
+        public OrderController(ShopContext context)
         {
-            var filteredOrders = string.IsNullOrEmpty(searchString)
-                ? Orders
-                : Orders.Where(s => s.User.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
-                                      s.Price.Contains(searchString)).ToList();
-
-            ViewBag.SearchString = searchString;
-            return View(filteredOrders);
+            _context = context;
         }
 
-        [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> AddToOrder(int id)
         {
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult Create(OrdersViewModel Order)
-        {
-            if (ModelState.IsValid)
+            var product = await _context.Products.FindAsync(id);
+            if (product == null)
             {
-                Order.Id = Orders.Any() ? Orders.Max(x => x.Id) + 1 : 1;
-                Orders.Add(Order);
-                return RedirectToAction("Index");
+                return NotFound();
             }
 
-            return View();
-        }
 
-        [HttpGet]
-        public IActionResult Edit(int id)
-        {
-            var Order = Orders.FirstOrDefault(s => s.Id == id);
-            if (Order == null) return NotFound();
-
-            return View(Order);
-        }
-
-        [HttpPost]
-        public IActionResult Edit(OrdersViewModel updatedOrder)
-        {
-            var Order = Orders.FirstOrDefault(s => s.Id == updatedOrder.Id);
-            if (Order == null) return NotFound();
-
-            if (ModelState.IsValid)
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null)
             {
-                Order.User = updatedOrder.User;
-                Order.Price = updatedOrder.Price;
-
-                return RedirectToAction("Index");
+                return RedirectToPage("/Account/Login", new { area = "Identity" });
             }
 
-            return View(updatedOrder);
-        }
 
-        [HttpGet]
-        public IActionResult Delete(int id)
+            var order = new OrderEntity
+            {
+                ProductId = product.Id,
+                UserId = userId,
+                OrderDate = DateTime.Now,
+                IsPaid = false
+            };
+
+            _context.Orders.Add(order);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index", "Orders");
+
+
+        }
+        public async Task<IActionResult> Index()
         {
-            var Order = Orders.FirstOrDefault(s => s.Id == id);
-            if (Order == null) return NotFound();
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            return View(Order);
+            if (userId == null)
+            {
+                return RedirectToPage("/Account/Login", new { area = "Identity" });
+            }
+
+            var orders = await _context.Orders
+                .Include(o => o.Product)
+                .Where(o => o.UserId == userId)
+                .ToListAsync();
+
+            return View(orders);
         }
 
-        [HttpPost]
-        public IActionResult DeleteConfirmed(int id)
-        {
-            var Order = Orders.FirstOrDefault(s => s.Id == id);
-            if (Order == null) return NotFound();
-
-            Orders.Remove(Order);
-            return RedirectToAction("Index");
-        }
-
-        [HttpGet]
-        public IActionResult Details(int id)
-        {
-            var Order = Orders.FirstOrDefault(s => s.Id == id);
-            if (Order == null) return NotFound();
-
-            return View(Order);
-        }
     }
 }
